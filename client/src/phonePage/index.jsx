@@ -38,10 +38,12 @@ export default function PhonePage() {
         console.log(err)
       })
 
+    // 将自身的socketId作为拨号id赋值到剪贴板
     socket.on('me', (id) => {
       setThisId(id)
     })
 
+    // 另一方发送拨号请求
     socket.on('callUser', (data) => {
       setInReceving(true)
       setCallerId(data.from)
@@ -49,6 +51,7 @@ export default function PhonePage() {
       setThatSignal(data.signal)
     })
 
+    // 对方挂断时执行清理操作
     socket.on('stopCall', () => {
       afterStop()
     })

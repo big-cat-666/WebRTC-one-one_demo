@@ -17,11 +17,8 @@ const io = new Server(server, {
 
 // 服务器socket链接
 io.on('connection', (socket) => {
+  // 向客户端发送id
   socket.emit('me', socket.id)
-  // 断开通话
-  socket.on('disconnect', () => {
-    socket.broadcast.emit('callEnded')
-  })
 
   socket.on('callUser', (data) => {
     // 将数据传递给通信的接听方
@@ -32,11 +29,13 @@ io.on('connection', (socket) => {
     })
   })
 
+  // 一方接受通话后，告知另一方对方已接听
   socket.on('answerCall', (data) => {
     // 将数据传递给通信的发起方
     io.to(data.to).emit('callAccepted', data.signal)
   })
 
+  // 一方断开通话时，向另一方发送通知
   socket.on('stopCall', (data) => {
     io.to(data).emit('stopCall')
   })
