@@ -8,7 +8,7 @@ import './index.less'
 
 const socket = io.connect('http://localhost:5050')
 
-export default function PhonePage() {
+export default function VideoPhonePage() {
   const [stream, setStream] = useState(null)
   const [thisName, setThisName] = useState('')
   const [thatName, setThatName] = useState('')
